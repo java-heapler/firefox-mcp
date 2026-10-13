@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "firefox-library"
+version = "0.1.0"
+description = "Read-only Firefox bookmarks and folder context for agents"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{name = "Joseph Heupler"}]
+dependencies = []
+
+[project.scripts]
+firefox-library = "firefox_library.cli:run"
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "pytest-cov>=7,<8"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/firefox_library"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
