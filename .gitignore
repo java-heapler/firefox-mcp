@@ -8,3 +8,4 @@ coverage.xml
 dist/
 *.egg-info/
 .DS_Store
+coverage.json

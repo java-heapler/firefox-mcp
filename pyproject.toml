@@ -11,6 +11,9 @@ requires-python = ">=3.11"
 authors = [{name = "Joseph Heupler"}]
 dependencies = []
 
+[project.urls]
+Repository = "https://github.com/java-heapler/firefox-mcp"
+
 [project.scripts]
 firefox-library = "firefox_library.cli:run"
 
@@ -23,3 +26,7 @@ packages = ["src/firefox_library"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+
+[tool.coverage.report]
+fail_under = 100
+precision = 2

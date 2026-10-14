@@ -1,4 +1,6 @@
-# Firefox
+# Firefox MCP
+
+Source: [firefox-mcp](https://github.com/java-heapler/firefox-mcp). The executable and Python package names remain unchanged.
 
 Read-only Firefox bookmark access for agents. The `firefox-library` CLI returns JSON with folder ancestry, tags, timestamps, and pagination. It never launches Firefox, fetches bookmarked URLs, returns browsing history, or changes bookmarks. No runtime dependencies beyond Python 3.11+.
 
@@ -29,10 +31,10 @@ The implementation follows Mozilla's [Places overview](https://firefox-source-do
 
 ```sh
 uv sync --extra dev
-uv run pytest --cov=firefox_library --cov-branch --cov-report=term-missing
+uv run pytest --cov=firefox_library --cov-branch --cov-report=term-missing --cov-fail-under=100
 uv build
 ```
 
 Tests use synthetic profiles, real SQLite including a live WAL writer, read-only enforcement, and an actual CLI subprocess. No personal bookmarks are used in CI. The agent skill is `skills/firefox/SKILL.md`.
 
-Measured on Python 3.13: **19 tests passing**, **98.85% statement coverage** (172/174) and **98.61% branch coverage** (71/72). The unmeasured lines are subprocess entrypoint execution; the CLI is additionally exercised in a separate process. Coverage is evidence of exercised paths, not a guarantee of complete correctness.
+The suite enforces **100% statement and branch coverage**, including the module entry point. Tests use synthetic data; coverage is evidence of exercised paths, not a guarantee of complete correctness.

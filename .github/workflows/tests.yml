@@ -12,5 +12,5 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - run: uv sync --locked --extra dev
-      - run: uv run pytest --cov=firefox_library --cov-branch --cov-report=term-missing --cov-fail-under=97
+      - run: uv run pytest --cov=firefox_library --cov-branch --cov-report=term-missing --cov-fail-under=100
       - run: uv build

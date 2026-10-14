@@ -248,3 +248,23 @@ def test_copied_integrity_failure(library, monkeypatch):
     monkeypatch.setattr(cli.sqlite3, 'connect', BrokenCheck)
     with pytest.raises(ValueError, match='integrity'):
         cli.read_rows(path / 'places.sqlite', check=True)
+
+
+@pytest.mark.parametrize('missing', [False, True])
+def test_module_entrypoint(library, monkeypatch, capsys, missing):
+    """The real module wrapper must preserve JSON and its application exit status."""
+    import runpy
+
+    _, profile = library
+    if missing:
+        profile = profile / 'absent'
+    monkeypatch.setattr(sys, 'argv', ['firefox-library', '--profile-path', str(profile), 'bookmarks'])
+    with pytest.raises(SystemExit) as result:
+        runpy.run_path(cli.__file__, run_name='__main__')
+    assert result.value.code == (1 if missing else 0)
+    payload = json.loads(capsys.readouterr().out)
+    if missing:
+        assert payload['error']
+    else:
+        assert payload['total'] == 3
+        assert payload['items'][0]['title'] == 'Python'
